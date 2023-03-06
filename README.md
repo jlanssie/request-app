@@ -1,6 +1,6 @@
-# Docker Container
+# Request App
 
-A sample Docker Container. 
+A sample ExpressJS app in a Docker container.
 
 ## Installation
 
