@@ -8,7 +8,7 @@ A sample ExpressJS app in a Docker container.
 
 ## Run
 
-`sudo docker run -dp 3000:3000 request-app`
+`sudo docker run -dp 3001:3001 request-app`
 
 ## Stop
 
