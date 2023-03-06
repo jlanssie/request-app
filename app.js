@@ -1,41 +1,52 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+const endpoint = "http://localhost:3000";
 
-let requestCounter = "";
+const getRequest = () => {
+  const query = "?input=" + Math.random().toString(36).substr(2, 7);
 
-const getDate = () => {
-  return Intl.DateTimeFormat('en-GB', { dateStyle: 'short', timeStyle: 'medium' }).format(Date.now()).replace(",", " -");
-}
+  const queryRequest = endpoint + query;
 
-app.use(express.json())
+  fetch(queryRequest, {
+    method: "GET",
+    headers: {
+      "Content-Type": "text/html",
+    },
+  })
+    .then((response) =>
+      response ? response.toString() : "Server did not respond."
+    )
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
 
-app.get("/", (req, res) => {
-  const data = req.query.input;
-  const processedData = data ? data : "/";
+const postRequest = () => {
+  const payload = {
+    context: "docker-container",
+    id: Date.now(),
+    data: Math.random().toString(36).substr(2, 7),
+  };
 
-  requestCounter++;
+  fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) =>
+      response ? response.toString() : "Server did not respond."
+    )
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
 
-  const payload = "query: " + processedData + "<br><br>----<br><br>requests received: " + requestCounter;
+setInterval(getRequest, 5000);
 
-  console.log(getDate(), "-", req.url, "-", req.body)
-
-  res.send(payload);
-});
-
-app.post("/", (req, res) => {
-  const data = req.body;
-  const processedData = data ? data : "/";
-
-  requestCounter++;
-
-  const payload = "payload: " + JSON.stringify(processedData) + " - " + "requests received: " + requestCounter;
-
-  console.log(getDate(), "-", req.url, "-", req.body)
-
-  res.send(payload);
-});
-
-app.listen(port, () => {
-  console.log(`ExpressJS listening on port ${port}`);
-});
+setInterval(postRequest, 5000);

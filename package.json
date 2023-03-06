@@ -1,9 +1,11 @@
 {
-  "name": "my-docker-container",
+  "name": "Request App",
   "version": "1.0.0",
   "description": "A sample ExpressJS app in a Docker container.",
   "main": "app.js",
-  "scripts": {},
+  "scripts": {
+    "app" : "node app"
+  },
   "author": "Jeremy Lanssiers",
   "license": "ISC",
   "dependencies": {
