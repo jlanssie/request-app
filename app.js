@@ -1,11 +1,17 @@
-let endpoint = process.env.endpoint
+let protocol = process.env.protocol;
 
-endpoint ? "" : endpoint = "http://127.0.0.1:3000";
+if (!protocol) { protocol = "http"; }
+
+let endpoint = process.env.endpoint;
+
+if (!endpoint) { endpoint = "127.0.0.1:3000"; }
+
+const newEndpoint = protocol + "://" + endpoint;
 
 const getRequest = () => {
   const query = "?input=" + Math.random().toString(36).substr(2, 7);
 
-  const queryRequest = endpoint + query;
+  const queryRequest = newEndpoint + query;
 
   fetch(queryRequest, {
     method: "GET",
@@ -31,7 +37,7 @@ const postRequest = () => {
     data: Math.random().toString(36).substr(2, 7),
   };
 
-  fetch(endpoint, {
+  fetch(newEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
