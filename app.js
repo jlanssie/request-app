@@ -1,4 +1,6 @@
-const endpoint = "http://localhost:3000";
+let endpoint = process.env.endpoint
+
+endpoint ? "" : endpoint = "http://127.0.0.1:3000";
 
 const getRequest = () => {
   const query = "?input=" + Math.random().toString(36).substr(2, 7);
