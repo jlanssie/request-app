@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: request-app-deployment
+  labels:
+    app: request-app
+spec:
+  selector:
+    matchLabels:
+      app: request-app
+  template:
+    metadata:
+      labels:
+        app: request-app
+    spec:
+      containers:
+      - name: request-app
+        image: request-app
+        imagePullPolicy: Never
+        args:
+        - "-endpoint=http://response-app:3000"
